@@ -1,0 +1,82 @@
+{
+    "name" : "MultiCompartmentCellQuant",
+    "version" : "v1_0_0",
+    "queue" : "MultiCompartmentCellQuant--v1_0_0",
+    "parameters" : {
+        "slide" : {
+            "label" : "Slide Name",
+            "description" : "The slide being analyzed.",
+            "type" : "string",
+            "default" : ""
+        },
+        "region" : {
+            "label" : "Region",
+            "description" : "The region being analyzed.",
+            "type" : "string",
+            "default" : ""
+        },
+        "branch" : {
+            "label" : "Analysis Container",
+            "description" : "Tag for analysis results.",
+            "type" : "string",
+            "default" : "templateAnalysis"
+        },
+        "force" : {
+            "label" : "Force",
+            "description" : "Whether to force an overwrite",
+            "type" : "boolean",
+            "default" : false
+        },
+        "quantitateNuclei" : {
+            "label" : "Quantitate Nuclei?",
+            "description" : "Whether to quantitate nuclei compartments.",
+            "type" : "boolean",
+            "default" : true
+        },
+        "quantitateCells" : {
+            "label" : "Quantitate Cells?",
+            "description" : "Whether to quantitate cellular compartments.",
+            "type" : "boolean",
+            "default" : true
+        },
+        "required" : ["slide","region","branch","force", "quantitateNuclei","quantitateCells"]
+    },
+    "results" : {
+     	"nuclearImage" : {
+            "label" : "Nuclear Image",
+            "description" : "Background image to display",
+            "type" : "pathologyImage",
+            "value" : "slide/region/source/DAPI"
+        },
+        "cellMetrics" : {
+            "label" : "Cell Metrics",
+            "description" : "Cell quantitation.",
+            "type" : "CSV",
+            "value" : "slide/region/branch/Quan"
+        }
+    },
+    "result_display" : {
+        "grid" : {
+            "shape" : [1,1],
+            "columns" : [1.0],
+            "rows" : [1.0]
+        },
+        "cells" : [
+            {
+                "column" : 0,
+                "row" : 0,
+                "cellType" : "pathologyImage",
+                "source" : "result",
+                "parameter" : "nuclearImage"
+            }
+        ]
+    },
+    "api" : {
+	"context" : "none"
+    },
+    "doc" : {
+	"short" : "A short bit of documentation",
+	"full" : "Full documentation"
+    },
+    "classification" : "quantification/cell"
+}
