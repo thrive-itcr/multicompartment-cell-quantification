@@ -18,20 +18,29 @@ def run_algorithm(datastore,context):
     for f in glob.glob('/rt106/input/*') + glob.glob('/rt106/output/*'):
         os.remove(f)
 
-# 1.    Code for marshalling your inputs.
+# 1.    Code for marshalling inputs.
     nuc_seg_path =  datastore.get_pathology_result_image_path(context['slide'], context['region'], context['branch'], 'NucSeg')
     nuc_seg_image = 'NucSeg.tif'
-    datastore.get_instance(nuc_seg_path, '/rt106/input', nuc_seg_image, 'tiff16')
+    instance_status = datastore.get_instance(nuc_seg_path, '/rt106/input', nuc_seg_image, 'tiff16')
+    # Check for error.
+    if (instance_status != 200 ):
+        status = "ERROR_NucSeg_FILE_NOT_FOUND"
+        return { 'result' : {}, 'status' : status }
+
     
     if 'quantitateCells' in context and context['quantitateCells']:
         cell_seg_path = datastore.get_pathology_result_image_path(context['slide'], context['region'], context['branch'],'CellSeg')
         cell_seg_image = 'CellSeg.tif'
-        datastore.get_instance(cell_seg_path, '/rt106/input', cell_seg_image, 'tiff16')
+        instance_status = datastore.get_instance(cell_seg_path, '/rt106/input', cell_seg_image, 'tiff16')
+        # Check for error.  The line below tests for an empty list of instances having been returned.
+        if instance_status != 200:
+            status = "ERROR_CellSeg_FILE_NOT_FOUND"
+            return { 'result' : {}, 'status' : status }
 
-    input_path = context['slide'] + '/' + context['region']
     datastore.retrieve_multi_channel_pathology_image(context['slide'], context['region'], '/rt106/input')
 
-    output_path = datastore.get_pathology_result_path(context['slide'], context['region'], context['branch'], 'Quant')   
+    output_path = datastore.get_pathology_result_path(context['slide'], context['region'], context['branch'], 'Quant')
+    logging.info('output_path: %r' % output_path)
     quan_csv = 'quant_%s.csv' % context['region']
     output_file = '/rt106/output/%s' % quan_csv
 
@@ -75,10 +84,10 @@ def run_algorithm(datastore,context):
         status = "EXECUTION_ERROR"
 
 # 5.    Create JSON structure containing results.
+    nuclear_image_path = datastore.get_pathology_primary_path(context['slide'], context['region'], 'DAPI')
     result_context = {
-        "inputPath" : input_path,
-        "SegMaskPath" : nuc_seg_path,
-        "outputPath" : output_path
+        "nuclearImage" : nuclear_image_path,
+        "cellMetrics" : output_path
     }
 
     return { 'result' : result_context, 'status' : status }

@@ -16,11 +16,6 @@ ADD entrypoint.sh                            /rt106/entrypoint.sh
 
 RUN mkdir -p /rt106/input && mkdir -p /rt106/output && mkdir -p /rt106/test
 
-ADD test2_dapi.tif 		/rt106/test/test2_dapi.tif
-ADD test2_pck26.tif 		/rt106/test/test2_pck26.tif
-ADD NucSeg.tif 		/rt106/test/NucSeg.tif
-ADD CellSeg.tif 		/rt106/test/CellSeg.tif
-
 RUN chmod a+x /rt106/entrypoint.sh
 
 WORKDIR /rt106

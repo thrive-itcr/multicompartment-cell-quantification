@@ -27,19 +27,13 @@
             "type" : "boolean",
             "default" : false
         },
-        "quantitateNuclei" : {
-            "label" : "Quantitate Nuclei?",
-            "description" : "Whether to quantitate nuclei compartments.",
-            "type" : "boolean",
-            "default" : true
-        },
         "quantitateCells" : {
             "label" : "Quantitate Cells?",
             "description" : "Whether to quantitate cellular compartments.",
             "type" : "boolean",
             "default" : true
         },
-        "required" : ["slide","region","branch","force", "quantitateNuclei","quantitateCells"]
+        "required" : ["slide","region","branch","force","quantitateCells"]
     },
     "results" : {
      	"nuclearImage" : {
