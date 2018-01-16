@@ -1,7 +1,7 @@
 {
-    "name" : "MultiCompartmentCellQuant",
+    "name" : "multi-compartment-cell-quantification",
     "version" : "v1_0_0",
-    "queue" : "MultiCompartmentCellQuant--v1_0_0",
+    "queue" : "multi-compartment-cell-quantification--v1_0_0",
     "parameters" : {
         "slide" : {
             "label" : "Slide Name",
