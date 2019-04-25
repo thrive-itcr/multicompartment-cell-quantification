@@ -1,6 +1,6 @@
 # Copyright (c) General Electric Company, 2017.  All rights reserved.
 
-FROM rt106/rt106-algorithm-sdk
+FROM thriveitcr/rt106-algorithm-sdk
 
 USER root
 
